@@ -1,12 +1,12 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-
 const Task = require("./model/taskSchema");
 const dbConnection = require("./config/dbConfig");
+const route = require("./routes");
 
 app.use(express.json());
-
+app.use(route);
 dbConnection();
 
 //================== create data with app.post method ======================
@@ -22,13 +22,13 @@ app.post("/createtask", function (req, res) {
   //   res.send("Hello World");
 });
 
-//================== read or get data with app.get method ======================
+//================== read or get data with app.get method and find({}) ======================
 app.get("/createtask", async function (req, res) {
   let data = await Task.find({});
   res.send(data);
 });
 
-//================== update  data with app.post method ======================
+//================== update  data with app.post method and findByIdAndUpdate() ======================
 app.post("/edittask", async function (req, res) {
   let { id, title } = req.body;
   await Task.findByIdAndUpdate({ _id: id }, { title: title });
